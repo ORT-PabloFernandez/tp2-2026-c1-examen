@@ -1,71 +1,84 @@
-import { getUsers, getUserByID, registerUserService, loginUserService } from "../services/userService.js";
+import {
+  getUsers,
+  getUserByID,
+  registerUserService,
+  loginUserService,
+} from "../services/userService.js";
 import jwt from "jsonwebtoken";
+import { MSG_INTERNAL_SERVER_ERROR } from "../constants/index.js";
 
 // EJEMPLO DE REFERENCIA: lee page y limit de los query params y los pasa al servicio.
 // Probalo: GET /api/users?page=1&limit=5  (requiere token)
-export async function getAllUsers(req, res){
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const users = await getUsers({ page, limit });
-        res.json(users);
-    } catch (error) {
-        console.error("Error fetching users: ", error);
-        res.status(500).json({message: "Internal server error"});
-    }
+export async function getAllUsers(req, res) {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const users = await getUsers({ page, limit });
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+    res.status(500).json({ message: MSG_INTERNAL_SERVER_ERROR });
+  }
 }
 
 export async function getUser(req, res) {
-    try {
-        const user = await getUserByID(req.params.id);
-        if(!user){
-            return res.status(404).json({message: "Usuario no encontrado"});
-        }
-        res.json(user);
-    } catch (error) {
-        console.error("Error fetching users: ", error);
-        res.status(500).json({message: "Internal server error"});
+  try {
+    const user = await getUserByID(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+    res.status(500).json({ message: MSG_INTERNAL_SERVER_ERROR });
+  }
 }
 
-export async function registerUserController(req, res){
-    const {name, email, password} = req.body;
-    if(!name || !email || !password) {
-        return res.status(400).json({message: "Faltan campos obligatorios (name, email, password)"});
-    }
+export async function registerUserController(req, res) {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Faltan campos obligatorios (name, email, password)" });
+  }
 
-    try {
-        const result = await registerUserService({name, email, password});
-        res.status(201).json({message: "Usuario registrado exitosamente", userId: result.insertedId});
-    } catch (error) {
-        if(error.message === "El email ya esta registrado"){
-            return res.status(409).json({message: error.message});
-        }
-        console.error("Error registrando usuario: ", error);
-        res.status(500).json({message: "Error interno al registrar usuario"});
+  try {
+    const result = await registerUserService({ name, email, password });
+    res.status(201).json({
+      message: "Usuario registrado exitosamente",
+      userId: result.insertedId,
+    });
+  } catch (error) {
+    if (error.message === "El email ya esta registrado") {
+      return res.status(409).json({ message: error.message });
     }
+    console.error("Error registrando usuario: ", error);
+    res.status(500).json({ message: "Error interno al registrar usuario" });
+  }
 }
 
 export async function loginUserController(req, res) {
-    const {email, password} = req.body;
+  const { email, password } = req.body;
 
-    if(!email || !password){
-        return res.status(400).json({message: "Faltan campos obligatorios (email, password)"});
-    }
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Faltan campos obligatorios (email, password)" });
+  }
 
-    try {
-        const user = await loginUserService({email, password});
-        const token = jwt.sign(
-            {_id: user._id, name: user.name, email: user.email}, 
-            process.env.JWT_SECRET, 
-            {expiresIn: "2h"}
-        );
-        res.json({message: "Login exitoso", user, token});
-    } catch (error) {
-        if(error.message === "Credenciales inválidas"){
-            return res.status(401).json({message: error.message});
-        }
-        console.error("Error en login: ", error);
-        res.status(500).json({message: "Error interno en login"});
+  try {
+    const user = await loginUserService({ email, password });
+    const token = jwt.sign(
+      { _id: user._id, name: user.name, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "2h" },
+    );
+    res.json({ message: "Login exitoso", user, token });
+  } catch (error) {
+    if (error.message === "Credenciales inválidas") {
+      return res.status(401).json({ message: error.message });
     }
+    console.error("Error en login: ", error);
+    res.status(500).json({ message: "Error interno en login" });
+  }
 }

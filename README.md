@@ -18,7 +18,7 @@ Es tu primer día en [cinestream.io](http://cinestream.io) y tu Líder Técnico 
 > 7. Ya están implementados y funcionando los siguientes endpoints de usuarios:
 >    - `POST /api/users/register` → body: `{ name, email, password }`
 >    - `POST /api/users/login` → body: `{ email, password }` — devuelve un JWT token
->    - `GET /api/users` *(requiere token)* → lista todos los usuarios
+>    - `GET /api/users` _(requiere token)_ → lista todos los usuarios
 >    - `GET /api/users/:id` → detalle de un usuario
 
 > ### TUS TAREAS SON LAS SIGUIENTES POR ORDEN DE PRIORIDAD
@@ -71,14 +71,15 @@ Si ya terminaste, o son las 10:00, asegurate de seguir los siguientes pasos para
 
 ## Listado de endpoints implementados
 
+| Método | Endpoint              | Parámetros                          | Requiere token | Descripción                      |
+| ------ | --------------------- | ----------------------------------- | -------------- | -------------------------------- |
+| POST   | `/api/users/register` | body: `name`, `email`, `password`   | No             | Registro de usuario              |
+| POST   | `/api/users/login`    | body: `email`, `password`           | No             | Login — devuelve JWT             |
+| GET    | `/api/users`          | —                                   | Sí             | Lista todos los usuarios         |
+| GET    | `/api/users/:id`      | `id` (ObjectId)                     | No             | Detalle de un usuario            |
+| GET    | `/api/movies`         | `page`, `limit`, `genre` (opcional) | No             | Listado de películas paginado    |
+| GET    | `/api/movies/winners` | —                                   | No             | Top 10 películas con más premios |
+| GET    | `/api/movies/latest`  | —                                   | No             | Las 5 películas más recientes    |
+| GET    | `/api/movies/:id`     | `id` (ObjectId)                     | No             | Detalle de una película          |
 
-| Método | Endpoint | Parámetros | Requiere token | Descripción |
-|--------|----------|------------|----------------|-------------|
-| POST | `/api/users/register` | body: `name`, `email`, `password` | No | Registro de usuario |
-| POST | `/api/users/login` | body: `email`, `password` | No | Login — devuelve JWT |
-| GET | `/api/users` | — | Sí | Lista todos los usuarios |
-| GET | `/api/users/:id` | `id` (ObjectId) | No | Detalle de un usuario |
-| GET | `/api/movies` | `page`, `limit`, `genre` (opcional) | No | Listado de películas paginado |
-| GET | `/api/movies/winners` | — | No | Top 10 películas con más premios |
-| GET | `/api/movies/latest` | — | No | Las 5 películas más recientes |
-| GET | `/api/movies/:id` | `id` (ObjectId) | No | Detalle de una película |
+Nota: Unicamente agregue una carpeta /constants para constantes por default de page, limit y mensajes que se repetians.
