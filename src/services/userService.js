@@ -1,4 +1,5 @@
 import { findAllUsers, findByCredentials, findUserById, registerUser } from "../data/userData.js";
+import { findAllMovies } from "../data/movieData.js";
 
 export async function getUsers({ page, limit } = {}){
     return await findAllUsers({ page, limit });
@@ -26,4 +27,9 @@ export async function loginUserService({email, password}){
     }
     const {password: _pw, ...userWithoutPassword} = user;
     return userWithoutPassword;
+}
+
+
+export async function getAllMovies({ page, limit}){
+    return await findAllMovies({ page, limit});
 }
