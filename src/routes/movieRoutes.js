@@ -3,6 +3,7 @@ import express from "express";
 // TODO (ejercicio 2): importar getMovieController
 // TODO (ejercicio 4): importar getAwardWinnersController
 // TODO (ejercicio 5): importar getLatestMoviesController
+import { getAllMoviesController, getAwardWinnersController, getLatestMoviesController, getMovieController } from "../controllers/movieController.js";
 
 const router = express.Router();
 
@@ -10,6 +11,10 @@ const router = express.Router();
 // TODO (ejercicio 4): GET /winners → getAwardWinnersController  ⚠️ debe ir ANTES de /:id
 // TODO (ejercicio 5): GET /latest → getLatestMoviesController    ⚠️ debe ir ANTES de /:id
 // TODO (ejercicio 2): GET /:id → getMovieController
+router.get("/", getAllMoviesController);
+router.get("/winners", getAwardWinnersController)
+router.get("/latest", getLatestMoviesController);
+router.get("/:id", getMovieController);
 //
 // ⚠️ IMPORTANTE: las rutas con path fijo (/winners, /search) deben definirse
 //    ANTES de la ruta dinámica (/:id), porque Express las evalúa en orden.
