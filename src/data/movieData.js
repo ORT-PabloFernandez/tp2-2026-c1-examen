@@ -3,13 +3,28 @@ import { ObjectId } from "mongodb";
 
 // TODO (ejercicio 1): implementar paginación igual que en findAllUsers (ver src/data/userData.js)
 // Recibe { page, limit } y retorna el array de películas de esa página
-export async function findAllMovies({ page = 1, limit = 20 } = {}) {
+export async function findAllMovies({ page = 1, limit = 20 , genre } = {}) {
+    const db = getDb();
+    const skip = (page - 1) * limit;
+    const filter = genre
+    ?{genres:genre}:{};
 
+
+    const movies = await db.collection("movies")
+        .find(filter)
+        .skip(skip)
+        .limit(limit)
+        .toArray();
+    return movies;
 }
 
 // TODO (ejercicio 2): buscar una película por su _id usando new ObjectId(id)
 // Retornar null si no existe
 export async function findMovieById(id) {
+    const db = getDb();
+    const movie = await db.collection("movies")
+    .findOne({ _id: new ObjectId(id)});
+    return movie;
 
 }
 
@@ -18,8 +33,22 @@ export async function findMovieById(id) {
 // Ordenar por awards.wins de mayor a menor: .sort({ "awards.wins": -1 })
 // Limitar a los primeros 10 resultados
 export async function findAwardWinners() {
+    const db = getDb();
+    const top= 11;
+    const movies = await db.collection("movies")
+    .find({ "awards.wins": { $gt: 0 } })
+    .sort({ "awards.wins": -1 })
+    .limit(top)
+    .toArray();
 
+
+
+
+    return movies;
 }
+
+
+
 
 // ✅ Ejercicio 5: ya implementada — no necesitás modificarla
 export async function findLatestMovies() {
