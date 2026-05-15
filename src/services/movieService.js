@@ -1,21 +1,35 @@
 import { findAllMovies, findMovieById, findAwardWinners, findLatestMovies } from "../data/movieData.js";
 
-// TODO (ejercicio 1): llamar a findAllMovies con { page, limit } y retornar el resultado
+/**
+ * Ejercicio 1: Obtiene todas las películas con soporte para paginación.
+ * Se pasan los parámetros desestructurados al repositorio.
+ */
 export async function getAllMovies({ page, limit }) {
-
+    const movies = await findAllMovies({ page, limit });
+    return movies;
 }
 
-// TODO (ejercicio 2): llamar a findMovieById y retornar el resultado
+/**
+ * Ejercicio 2: Obtiene una película específica por su ID.
+ * Es importante que el repositorio se encargue de la conversión a ObjectId.
+ */
 export async function getMovieByID(id) {
-
+    const movie = await findMovieById(id);
+    return movie;
 }
 
-// TODO (ejercicio 4): llamar a findAwardWinners y retornar el resultado
+/**
+ * Ejercicio 4: Obtiene las películas que han ganado premios.
+ */
 export async function getAwardWinners() {
-
+    const winners = await findAwardWinners();
+    return winners;
 }
 
-// TODO (ejercicio 5): llamar a findLatestMovies y retornar el resultado
+/**
+ * Ejercicio 5: Obtiene las películas más recientes según su fecha de estreno.
+ */
 export async function getLatestMovies() {
-
+    const latest = await findLatestMovies();
+    return latest;
 }

@@ -1,18 +1,38 @@
 import express from "express";
-// TODO (ejercicio 1): importar getAllMoviesController desde movieController.js
-// TODO (ejercicio 2): importar getMovieController
-// TODO (ejercicio 4): importar getAwardWinnersController
-// TODO (ejercicio 5): importar getLatestMoviesController
+// Importación de controladores (siguiendo los ejercicios planteados)
+import { 
+    getAllMoviesController, 
+    getMovieController, 
+    getAwardWinnersController, 
+    getLatestMoviesController 
+} from "../controllers/movieController.js"; // Ajustar la ruta según tu estructura de carpetas
 
 const router = express.Router();
 
-// TODO (ejercicio 1): GET /  → getAllMoviesController
-// TODO (ejercicio 4): GET /winners → getAwardWinnersController  ⚠️ debe ir ANTES de /:id
-// TODO (ejercicio 5): GET /latest → getLatestMoviesController    ⚠️ debe ir ANTES de /:id
-// TODO (ejercicio 2): GET /:id → getMovieController
-//
-// ⚠️ IMPORTANTE: las rutas con path fijo (/winners, /search) deben definirse
-//    ANTES de la ruta dinámica (/:id), porque Express las evalúa en orden.
-//    Si /:id se define primero, "winners" y "latest" serán interpretados como un id.
+/**
+ * Ejercicio 1: Listado general de películas (con paginación)
+ * GET /api/movies/
+ */
+router.get("/", getAllMoviesController);
+
+/**
+ * Ejercicio 4: Películas ganadoras de premios
+ * GET /api/movies/winners
+ * Se define ANTES de /:id para evitar colisiones de rutas.
+ */
+router.get("/winners", getAwardWinnersController);
+
+/**
+ * Ejercicio 5: Últimas películas estrenadas
+ * GET /api/movies/latest
+ * Se define ANTES de /:id.
+ */
+router.get("/latest", getLatestMoviesController);
+
+/**
+ * Ejercicio 2: Obtener una película por su ObjectId
+ * GET /api/movies/:id
+ */
+router.get("/:id", getMovieController);
 
 export default router;
