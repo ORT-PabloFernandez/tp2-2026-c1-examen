@@ -82,3 +82,7 @@ Si ya terminaste, o son las 10:00, asegurate de seguir los siguientes pasos para
 | GET | `/api/movies/winners` | — | No | Top 10 películas con más premios |
 | GET | `/api/movies/latest` | — | No | Las 5 películas más recientes |
 | GET | `/api/movies/:id` | `id` (ObjectId) | No | Detalle de una película |
+|GET  |/api/movies |page, limit, genre (opcional) |No | Listado de películas paginado
+|GET | /api/movies/winners | -|NO|  Listado de peliculas ganadoras
+|GET |/api/movies/latest | - | NO | Las ultimas 5 peiculas 
+GET | /api/movies/:id | ID OBJECTID | NO | detalle de peli
