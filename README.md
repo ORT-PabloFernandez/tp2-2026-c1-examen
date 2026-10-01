@@ -77,3 +77,6 @@ Completá la siguiente tabla con los endpoints que implementaste. Especificá lo
 | GET | `/api/movies/winners` | — | No | Top 10 películas con más premios |
 | GET | `/api/movies/search` | `q` (texto a buscar) | No | Búsqueda de películas por título |
 | GET | `/api/movies/:id` | `id` (ObjectId) | Sí | Detalle de una película |
+
+
+cambios
