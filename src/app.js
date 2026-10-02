@@ -4,6 +4,8 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 // TODO (ejercicio 4): importar movieRoutes y registrar la ruta /api/movies
 
+import movieRoutes from "./routes/movieRoutes.js";
+
 const app = express();
 
 app.use(cors());
@@ -12,6 +14,8 @@ app.use(morgan("dev"));
 
 app.use("/api/users", userRoutes);
 // TODO (ejercicio 4): app.use("/api/movies", movieRoutes);
+
+app.use("/api/movies", movieRoutes);
 
 app.get("/", (req, res) => {
     res.send("API funcionando 🚀");

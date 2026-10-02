@@ -79,4 +79,3 @@ Completá la siguiente tabla con los endpoints que implementaste. Especificá lo
 | GET | `/api/movies/:id` | `id` (ObjectId) | Sí | Detalle de una película |
 
 
-mas cambios
