@@ -3,9 +3,14 @@ import express from "express";
 // TODO (ejercicio 2): importar getMovieController y authMiddleware
 // TODO (ejercicio 4): importar getAwardWinnersController
 // TODO (ejercicio 5): importar searchMoviesController
+import { getAllMoviesController, getMovieController } from "../controllers/movieController.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
+
 
 const router = express.Router();
 
+router.get("/", authMiddleware, getAllMoviesController);
+router.get("/:id", authMiddleware, getMovieController);
 // TODO (ejercicio 1): GET /  → getAllMoviesController
 // TODO (ejercicio 4): GET /winners → getAwardWinnersController  ⚠️ debe ir ANTES de /:id
 // TODO (ejercicio 5): GET /search → searchMoviesController       ⚠️ debe ir ANTES de /:id
