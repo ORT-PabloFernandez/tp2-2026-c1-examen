@@ -1,13 +1,13 @@
 import { findAllMovies, findMovieById, findAwardWinners, findMoviesByTitle } from "../data/movieData.js";
 
-// TODO (ejercicio 1): llamar a findAllMovies con { page, limit } y retornar el resultado
-export async function getAllMovies({ page, limit }) {
-
+// TODO (ejercicio 1): llamar a findAllMovies con { page, limit, genre } y retornar el resultado
+export async function getAllMovies({ page, limit, genre }) {
+  return await findAllMovies({ page, limit, genre });
 }
 
 // TODO (ejercicio 2): llamar a findMovieById y retornar el resultado
 export async function getMovieByID(id) {
-
+  return await findMovieById(id);
 }
 
 // TODO (ejercicio 4): llamar a findAwardWinners y retornar el resultado
